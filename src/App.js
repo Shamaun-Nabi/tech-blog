@@ -1,10 +1,33 @@
-// import logo from './logo.svg';
 // import './App.css';
-function App() {
 
+import { createContext, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import BlogInfo from "./Components/BlogInfo/BlogInfo";
+import Home from "./Components/Home/Home";
+import Login from "./Components/Login/Login";
+import Navbar from "./Components/Navbar/Navbar";
+import Notfound from "./Components/Notfound/Notfound";
+import Registration from "./Components/Registration/Registration";
+import Video from "./Components/Video/Video";
+
+export const BlogContext = createContext();
+
+function App() {
+  const [shareBlog, setShareBlog] = useState([]);
+  // console.log("first", shareBlog);
   return (
     <>
-      <h3 className="text-indigo-500">Test class</h3>
+      <BlogContext.Provider value={[shareBlog, setShareBlog]}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="blogsinfo/:id" element={<BlogInfo />} />
+          <Route path="videos" element={<Video />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Registration />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </BlogContext.Provider>
     </>
   );
 }
