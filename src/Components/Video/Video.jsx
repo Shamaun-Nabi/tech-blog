@@ -7,7 +7,7 @@ export default function Video() {
         <div className="py-28 items-center ">
            {/* Auto playe videos */}
         <iframe
-        className="border-4 ring-2 ring-orange-600 ring-offset-4 ring-offset-purple-100 shadow-lg rounded-  md:w-[600px] md:h-[300px] w-[320px] h-[200px]  "
+        className=" border-4 ring-2 ring-orange-600 ring-offset-4 ring-offset-purple-100 shadow-lg rounded-  md:w-[600px] md:h-[300px] w-[320px] h-[200px]  "
             allow="autoplay"
            
             src="https://www.youtube.com/embed/XKfgdkcIUxw?autoplay=1"

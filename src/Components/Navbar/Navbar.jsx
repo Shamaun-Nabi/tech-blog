@@ -1,13 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../logo.webp";
 import { RiMenu2Fill } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
+import app from "../Firebase/Firebase.init";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
+const auth = getAuth(app);
 export default function Navbar() {
-  let {pathname} = useLocation();
+  const [loginUser, setLoginUser] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        setLoginUser(user);
+        navigate("/");
+        // ...
+      } else {
+        setLoginUser({});
+        // User is signed out
+        // ...
+      }
+    });
+  }, []);
+
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/login");
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+  console.log(loginUser);
+
+  let { pathname } = useLocation();
   let navigate = useNavigate();
   const [slide, setSlide] = useState(0);
 
@@ -19,7 +53,11 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <div className={pathname.includes('blogsinfo')?`hidden`:" py-5 shadow-md"}>
+      <div
+        className={
+          pathname.includes("blogsinfo") ? `hidden` : " py-5 shadow-md"
+        }
+      >
         <header className="flex items-center justify-between container mx-auto relative">
           <div onClick={() => navigate("/")} className="cursor-pointer">
             <motion.img
@@ -53,18 +91,40 @@ export default function Navbar() {
               >
                 Videos
               </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? `text-orange-400 border-b-2 transition-all ease-in`
-                    : "text-black"
-                }
-                to="/login"
-              >
-                Login
-              </NavLink>
+              {loginUser?.uid ? (
+                <li>{loginUser?.displayName.slice(0, 8)}</li>
+              ) : (
+                ""
+              )}
+
+              {loginUser?.uid ? (
+                <li
+                  className="  cursor-pointer hover:text-orange-400 border-b-2 transition-all ease-in"
+                  onClick={signOutUser}
+                >
+                  Logout
+                </li>
+              ) : (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? `text-orange-400 border-b-2 transition-all ease-in`
+                      : "text-black"
+                  }
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              )}
             </ul>
           </motion.div>
+          {/* <div>
+            <img className="w-[60px] h-[60px] rounded-full object-fill"
+              src="https://source.unsplash.com/random/?man/40x40
+"
+              alt=""
+            />
+          </div> */}
           <div className="lg:hidden md:hidden block text-3xl p-4">
             <span
               onClick={() => animateNav()}

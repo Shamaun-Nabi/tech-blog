@@ -3,8 +3,24 @@ import { Link } from "react-router-dom";
 import { AiFillGithub } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import app from "../Firebase/Firebase.init";
 
+const googleProvider = new GoogleAuthProvider();
+
+const auth = getAuth(app);
 export default function Login() {
+  const googleHandeler = (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+      })
+      .catch((error) => {
+        console.log("Error Happened");
+        // ...
+      });
+  };
   return (
     <>
       <>
@@ -15,7 +31,8 @@ export default function Login() {
             {/* Row */}
             <div className="w-full xl:w-3/4 lg:w-11/12 flex">
               {/* Col */}
-              <div className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg border-4 border-slate-300"
+              <div
+                className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg border-4 border-slate-300"
                 style={{
                   backgroundImage:
                     'url("https://source.unsplash.com/random/?secure/600x800")',
@@ -24,7 +41,7 @@ export default function Login() {
               {/* Col */}
               <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
                 <h3 className="pt-4 text-2xl text-center">
-                 Login Your Account!
+                  Login Your Account!
                 </h3>
                 <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                   <div className="mb-4">
@@ -71,7 +88,10 @@ export default function Login() {
                   <hr className="mb-3 border-t" />
                   <div className=" mb-3">
                     <div className="flex justify-center m-2">
-                      <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                      <button
+                        onClick={googleHandeler}
+                        className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
+                      >
                         <div className="relative flex items-center space-x-4 justify-center">
                           <FcGoogle />
                           <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
