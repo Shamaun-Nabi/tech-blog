@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AiFillGithub } from "react-icons/ai";
+import { BsFacebook } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   return (
@@ -66,6 +69,40 @@ export default function Login() {
                       Login Your Account
                     </button>
                   </div>
+                  <hr className="mb-3 border-t" />
+                  <div className=" mb-3">
+                    <div className="flex justify-center m-2">
+                      <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                        <div className="relative flex items-center space-x-4 justify-center">
+                          <FcGoogle />
+                          <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
+                            Continue with Google
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                    <div className="flex justify-center m-2">
+                      <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                        <div className="relative flex items-center space-x-4 justify-center">
+                          <AiFillGithub />
+                          <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
+                            Continue with Github
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                    <div className="flex justify-center m-2">
+                      <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                        <div className="relative flex items-center space-x-4 justify-center">
+                          <BsFacebook className="text-indigo-600" />
+                          <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
+                            Continue with Facebook
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
                   <hr className="mb-6 border-t" />
                   <div className="text-center">
                     <a
@@ -76,9 +113,9 @@ export default function Login() {
                     </a>
                   </div>
                   <div className="text-center">
-                    <Link to="/register"
+                    <Link
+                      to="/register"
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                     
                     >
                       Don't have an account? Register!
                     </Link>
