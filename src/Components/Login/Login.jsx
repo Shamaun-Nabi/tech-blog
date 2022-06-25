@@ -5,16 +5,27 @@ import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../Firebase/Firebase.init";
+import {  toast } from "react-toastify";
+
 
 const googleProvider = new GoogleAuthProvider();
 
 const auth = getAuth(app);
 export default function Login() {
+
+  const notifyLogin = () =>
+  toast.success("Login Successfull", {
+    theme: "dark",
+    position: "top-center",
+    autoClose: 1000,
+  });
   const googleHandeler = (e) => {
     e.preventDefault();
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const user = result.user;
+        notifyLogin()
+
       })
       .catch((error) => {
         console.log("Error Happened");

@@ -7,10 +7,19 @@ import { NavLink } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import app from "../Firebase/Firebase.init";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 const auth = getAuth(app);
 export default function Navbar() {
   const [loginUser, setLoginUser] = useState({});
+
+  const notifyLogout = () =>
+    toast.warn("Logout Successfull", {
+      theme: "dark",
+      position: "top-center",
+      autoClose: 1000,
+    });
+ 
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -18,8 +27,10 @@ export default function Navbar() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
+     
         setLoginUser(user);
         navigate("/");
+
         // ...
       } else {
         setLoginUser({});
@@ -33,13 +44,13 @@ export default function Navbar() {
     signOut(auth)
       .then(() => {
         navigate("/login");
+        notifyLogout();
         // Sign-out successful.
       })
       .catch((error) => {
         // An error happened.
       });
   };
-  console.log(loginUser);
 
   let { pathname } = useLocation();
   let navigate = useNavigate();
@@ -116,6 +127,7 @@ export default function Navbar() {
                   Login
                 </NavLink>
               )}
+              <ToastContainer />
             </ul>
           </motion.div>
           {/* <div>
