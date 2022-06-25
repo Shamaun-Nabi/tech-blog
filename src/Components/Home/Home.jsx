@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import Blogs from "../Blogs/Blogs";
 import { BlogContext } from "../../App";
@@ -13,7 +13,7 @@ export default function Home() {
         // setBlog(data)
         setShareBlog(data);
       });
-  }, [shareBlog]);
+  }, [setShareBlog]);
 
   return (
     <>

@@ -4,7 +4,6 @@ import { RiMenu2Fill } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
