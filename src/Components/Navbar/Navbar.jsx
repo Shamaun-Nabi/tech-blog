@@ -19,15 +19,13 @@ export default function Navbar() {
       position: "top-center",
       autoClose: 1000,
     });
- 
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-     
+        // const uid = user.uid;
         setLoginUser(user);
         navigate("/");
 
@@ -154,6 +152,13 @@ export default function Navbar() {
         className={`bg-slate-100 shadow-lg ${open ? "block" : "hidden"}`}
       >
         <ul className="font-semibold  ">
+          {loginUser?.uid ? (
+            <li className="py-2 text-center hover:bg-slate-800  transition-all duration-300 ease-in hover:text-white">
+             {loginUser.displayName}
+            </li>
+          ) : (
+            " "
+          )}
           <li className="py-2 text-center hover:bg-slate-800 transition-all duration-300 ease-in hover:text-white">
             <NavLink
               className={({ isActive }) =>
@@ -189,6 +194,9 @@ export default function Navbar() {
             >
               login
             </NavLink>
+          </li>
+          <li className="py-2 text-center hover:bg-slate-800  transition-all duration-300 ease-in hover:text-white">
+            Logout
           </li>
         </ul>
       </motion.div>
