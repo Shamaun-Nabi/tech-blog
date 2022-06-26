@@ -41,7 +41,7 @@ export default function Login() {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         if (errorMessage.includes("auth/wrong-password")|| errorMessage.includes("auth/user-not-found")) {
           notifyError("Email or password Wrong");

@@ -57,8 +57,9 @@ export default function Registration() {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = notifyError(error.message);
+        // const errorCode = error.code;
+        const errorMessage =error.message;
+        notifyError(errorMessage)
         // ..
       });
     console.log("All Data stored");
