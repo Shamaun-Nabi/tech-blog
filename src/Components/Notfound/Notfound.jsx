@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Notfound() {
-  return (
-    <div>Notfound</div>
-  )
+  return <div>verify email first</div>;
 }

@@ -7,14 +7,14 @@ import { NavLink } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import app from "../Firebase/Firebase.init";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const auth = getAuth(app);
 export default function Navbar() {
   const [loginUser, setLoginUser] = useState({});
 
   const notifyLogout = () =>
-    toast.warn("Logout Successfull", {
+    toast.error("Logout Successfull", {
       theme: "dark",
       position: "top-center",
       autoClose: 1000,
@@ -28,7 +28,6 @@ export default function Navbar() {
         // const uid = user.uid;
         setLoginUser(user);
         navigate("/");
-
         // ...
       } else {
         setLoginUser({});
@@ -100,11 +99,7 @@ export default function Navbar() {
               >
                 Videos
               </NavLink>
-              {loginUser?.uid ? (
-                <li>{loginUser?.displayName.slice(0, 8)}</li>
-              ) : (
-                ""
-              )}
+              {loginUser?.uid ? <li>{loginUser?.displayName}</li> : ""}
 
               {loginUser?.uid ? (
                 <li
@@ -125,7 +120,6 @@ export default function Navbar() {
                   Login
                 </NavLink>
               )}
-              <ToastContainer />
             </ul>
           </motion.div>
           {/* <div>
@@ -154,7 +148,7 @@ export default function Navbar() {
         <ul className="font-semibold  ">
           {loginUser?.uid ? (
             <li className="py-2 text-center hover:bg-slate-800  transition-all duration-300 ease-in hover:text-white">
-             {loginUser.displayName}
+              {loginUser.displayName}
             </li>
           ) : (
             " "
