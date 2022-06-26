@@ -29,13 +29,13 @@ export default function Login() {
 
   const manualLoginHandeler = (e) => {
     e.preventDefault();
-    console.log(authData?.email, authData?.password);
     signInWithEmailAndPassword(auth, authData?.email, authData?.password)
       .then((userCredential) => {
-        // Signed in
+        // Signed
+        console.log(auth);
         const user = userCredential.user;
         user.displayName = authData.email;
-        console.log(user);
+        // console.log(user);
         notifyLogin();
         Navigate("/");
         // ...
@@ -43,7 +43,10 @@ export default function Login() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        notifyError("Something wrong");
+        if (errorMessage.includes("auth/wrong-password")|| errorMessage.includes("auth/user-not-found")) {
+          notifyError("Email or password Wrong");
+        }
+        // notifyError("Something wrong");
         console.log(errorMessage);
       });
   };
@@ -95,7 +98,10 @@ export default function Login() {
                 <h3 className="pt-4 text-2xl text-center">
                   Login Your Account!
                 </h3>
-                <form onSubmit={manualLoginHandeler} className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                <form
+                  onSubmit={manualLoginHandeler}
+                  className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+                >
                   <div className="mb-4">
                     <label
                       className="block mb-2 text-sm font-bold text-gray-700"
@@ -104,7 +110,8 @@ export default function Login() {
                       Email
                     </label>
                     <input
-                      onBlur={manualLoginHandeler}
+                      required
+                      onBlur={getAuthData}
                       className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
@@ -121,7 +128,8 @@ export default function Login() {
                         Password
                       </label>
                       <input
-                        onBlur={manualLoginHandeler}
+                        required
+                        onBlur={getAuthData}
                         name="password"
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="password"
